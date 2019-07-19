@@ -1,1 +1,1 @@
-# practice_experiment
+# practice-experiment
