@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title> Practice Experient </title>
+        <script src= "jspsych-6.0.5/jspsych.js" > </script>
+        <script src= "jspsych-6.0.5/plugins/jspsych-html-keyboard-response.js" > </script>
+        <script src= "jspsych-6.0.5/plugins/jspsych-image-keyboard-response.js" > </script>
+        <link href= "jspsych-6.0.5/css/jspsych.css"  rel="stylesheet" type="text/css">  </link>
+
+    </head>
+    <body> </body>
+    <script>
+
+var timeline = [] ;
+
+//first thing
+var opening = {
+    type : "html-keyboard-response" ,
+    stimulus : "<p> Hi. Welcome to this page. </p>" + "<p> Click any key to continue.</p>" ,
+ }  ;
+ 
+timeline.push(opening) ;
+
+//instructions
+var instructions = {
+    type : "html-keyboard-response" ,
+    stimulus :  "First you will see pictures of two animals." +  "<p>Press 'a' if the animal on the left is cuter.</p>" + "<p>Press 'b' if the animal on the right is cuter.</p>" ,
+    choice : ["a" , "b"] 
+} ;
+
+timeline.push (instructions) ;
+
+//insert 2 animal pictures
+
+var test_prompt = {
+    type: "html-keyboard-response" , 
+    stimulus : "Which one is cuter? Raccoon or goat?" , 
+} ;
+
+var stimuli = [
+    {stimulus : <img src= 'raccoon.png'></img> , data : { test_part : 'test' , correct_response : 'a'}},
+    {stimulus : <img src= 'goat.png'></img> , data: {test_part : 'test' , correct_response : 'b'}},
+] ;
+
+var test_a = {
+    type : "image-keyboard-response" ,
+    stimulus :  jsPsych.timelineVariable('stimulus') ,
+    choice : [ 'a' , 'b'] ,
+} ; 
+
+var test_procedure = {
+    timeline : [test_prompt , test_a] ,
+    timeline_variables: stimuli ,
+    repetition:  3 ,
+    randomize_order: true 
+} ;
+
+timeline.push(test_procedure) ;
+
+//last page
+
+var last = {
+    type : "html-keyboard-response" ,
+    stimulus : "Thank you for your participation!"
+} ;
+
+timeline.push(last) ;
+
+
+//last step(after timeline is completely created)
+jsPsych.init ({
+    timeline: timeline , 
+
+    on_finish : function() {
+        jsPsych.data.displayData() ;
+    }
+}) ; 
+
+
+    </script>
+</html>
